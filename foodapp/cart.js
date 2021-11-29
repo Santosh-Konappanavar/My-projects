@@ -1,24 +1,22 @@
-let cart = JSON.parse(localStorage.getItem("cart"));
-console.log(cart)
-let main =document.getElementById("main");
-function show() {
-  cart.forEach(function(products){
-      console.log(products.meals);
+
+  let cartItems = JSON.parse(localStorage.getItem("meals"));
+
+  let firstDiv = document.getElementById("main");
+
+  showMeal(cartItems);
+
+  function showMeal(x) {
+    firstDiv.innerHTML = null;
+    x.forEach(function (item) {
       let div = document.createElement("div");
-
       let img = document.createElement("img");
-      img.src = products.strMealThumb
-      let product_name = document.createElement("p");
-      product_name.innerText =products.strMeal;
+      img.src = item.strMealThumb;
 
-      let addtocart_btn = document.createElement("button");
-      addtocart_btn.innerHTML = "+ Add";
-      
-    //   addtocart_btn.onclick = function (){
-    //       addtoCart(products);
-    //   };
-      div.append(img,product_name,addtocart_btn);
-      main.append(div);
-  });
-}
-show();
+      let price = document.createElement("h2");
+      price.innerText =item.strMeal;
+
+      div.append(img, price);
+
+      firstDiv.append(div);
+    });
+  }
