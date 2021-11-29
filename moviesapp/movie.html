@@ -7,6 +7,23 @@
     <title>Movie Adda</title>
 </head>
 <body>
-    
+    <input type="text" id="movie" placeholder="Search movies" />
+    <button onclick="getmovies()">Search</button>
 </body>
 </html>
+<script>
+     let wall=document.getElementById("movie");
+    let url=`http://www.omdbapi.com/?t=${name}&apikey=cc52b307`
+    fetch(url)
+    .then(function(response){
+       return response.json() // returningb promise
+    })
+    .then(function(res){
+        console.log(res);
+        const data=res.data;
+        // getmovies(data)
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+</script>

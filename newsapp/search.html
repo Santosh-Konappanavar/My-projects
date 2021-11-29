@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>debonce</title>
+    <link rel="stylesheet" href=".styles/"/>
+</head>
+<body>
+    <input oninput="debonce(displaynews(),3000)" type="text" id="query" />
+    <div id="newsbox"></div>
+</body>
+</html>
+<script src="./scripts/search.js"></script>
+<!-- https://newsapi.org/v2/everything?q=Apple&from=2021-11-29&sortBy=popularity&apiKey=API_KEY -->
