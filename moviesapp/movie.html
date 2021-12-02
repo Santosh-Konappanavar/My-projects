@@ -1,29 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Adda</title>
-</head>
-<body>
-    <input type="text" id="movie" placeholder="Search movies" />
-    <button onclick="getmovies()">Search</button>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>movies</title>
+        <style>
+            *{
+                background-color: black;
+            }
+            img {
+                width: 100%;
+                height: 200px;
+            }
+            #movies {
+                padding: 10px;
+                border: 1px solid white;
+                color: white;
+            }
+            button {
+                padding: 10px;
+                background-color: blue;
+                color: white;
+                font-weight: bolder;
+                width: 200px;
+                font-size: 15px;
+                height: 40px;
+                cursor: pointer;
+                border: none;
+            }
+            button:hover {
+                background-color: royalblue;
+            }
+            #main{
+                margin-top: 4%;
+                text-align: center;
+                margin-bottom: 5%;
+            }
+            #data{
+                display: grid;
+                grid-template-columns: repeat(5,15%);
+                gap: 2.5%;
+                color: whitesmoke;
+               
+                justify-content: space-around;
+            }
+            #data>div{
+                box-shadow: 0 4px 8px 0 rgba(233, 227, 227, 0.3);
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+        <input type="text" id="movies" placeholder="Enter Movie Name" />
+        <button onclick="getmovie()">Get movie</button>
+        </div>
+        <div id="data"></div>
+    </body>
+    <script>
+         
+        async function getmovie() {
+            
+            try{
+                let movies = document.getElementById('movies').value;
+            let res = await fetch(
+                `https://www.omdbapi.com/?apikey=${65714494}&s=${movies}`,
+              
+            );
+            let data = await res.json();
+            console.log(data);
+                showmovie(data.Search);
+               
+            } catch(err){
+                alert("Movie not found")
+            }
+            movies.value=""
+          
+        }
+        let contaner = document.getElementById('data');
+        function showmovie(movies) {
+            contaner.innerHTML = null;
+            movies.forEach((movie) => {
+                let div =document.createElement("div")
+                let name = document.createElement('p');
+                name.innerText = movie.Title;
+                let temp = document.createElement('p');
+                temp.innerText = movie.Year;
+                let img = document.createElement('img');
+                img.src = movie.Poster;
+                div.append(img, name, temp);
+                contaner.append(div)
+            });
+        }
+    </script>
 </html>
-<script>
-     let wall=document.getElementById("movie");
-    let url=`http://www.omdbapi.com/?t=${name}&apikey=cc52b307`
-    fetch(url)
-    .then(function(response){
-       return response.json() // returningb promise
-    })
-    .then(function(res){
-        console.log(res);
-        const data=res.data;
-        // getmovies(data)
-    })
-    .catch(function(err){
-        console.log(err);
-    });
-</script>
