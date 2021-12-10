@@ -1,0 +1,37 @@
+#navbar{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 4%;
+    padding-right:4% ;
+    border: 1px solid black;
+    margin-bottom: 30px;
+}
+#option{
+                display: flex;
+                justify-content: space-between;
+                gap: 20px;
+         }
+a{
+                text-decoration: none;
+ }
+ #data{
+     display: grid;
+     grid-template-columns: repeat(4,25%);
+     text-align: center;
+ }
+ img{
+     width: 65%;
+ }
+ #in{
+     margin-top: 13px;
+     height: 30px;
+     width: 550px;
+ }
+ #but{
+    margin-top: 13px;
+    width: 250px;
+    height: 35px;
+     background-color: whitesmoke;
+     border: 1 px solid whitesmoke;
+
+ }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0L">
+    <title>Foody</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div id="container"></div>
+    <div id="movies"></div>
+</body>
+</html>
+<script type="module">
+import navbar from "./components/navbar.js";
+let container = document.getElementById("container");
+container.innerHTML= navbar();
+
+let bomb;
+let movies= document.getElementById("movies")
+async function searchmovie(){
+    try {
+    let name = document.getElementById("in").value;
+    let response = await fetch(`http://themealdb.com/api/json/v1/1/filter.php?a=indian`);
+    let data = await response.json();
+    return data.meals;
+    console.log(data.meals);
+    } catch(err){
+    console.log(err)
+    }
+}
+async function displaymovie(){
+    let moviedata = await searchmovie();
+    if(moviedata===undefined){
+        return false
+    }
+    console.log(moviedata)
+    moviedata.forEach(function(movie){
+    let p = document.createElement("p");
+    p.innerText = movie.strMeal;
+    movies.append(p);
+    }) 
+}
+function debonce(func,delay){
+clearTimeout(bomb)
+bomb=setTimeout(function(){
+    func();
+   },delay)
+}
+</script>
