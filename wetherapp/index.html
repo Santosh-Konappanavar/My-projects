@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather</title>
+    <style>
+        body{
+            background-image: url("http://www.noaa.gov/sites/default/files/styles/landscape_width_1275/public/legacy/image/2019/Jun/PHOTO-dark%20and%20stormy%20cloudscape-istock-1125x534-Landscape.jpg?itok=xyVD1jOK");
+            background-size: cover;
+        }
+        button {
+                padding: 10px;
+                background-color: blue;
+                color: white;
+                font-weight: bolder;
+                width: 200px;
+                font-size: 15px;
+                height: 40px;
+                cursor: pointer;
+                border: none;
+            }
+            button:hover {
+                background-color: royalblue;
+            }
+            #city{
+                padding: 10px;
+                border: 1px solid white;
+                color: black;
+            }
+        #weatherapp{
+            top: 5%;
+            width: 1000px;
+            display: flex;
+            margin:auto;
+        }
+        #weatherapp>div{
+            margin: 10px;
+        }
+        .main{
+            text-align: center;
+        }
+        #weather{
+            width: 60%;
+        }
+        #para{
+            display: flex;
+            justify-content: space-around;
+        }
+        #para>div{
+            margin: 5px;
+            width:50%;
+            color: whitesmoke;
+            text-align: center;
+        }
+        #right{
+            width: 400px;
+        }
+       #frame{
+        margin-top:1%;
+        width: 395px;
+        height: 300px;
+        border-radius: 10px;
+        opacity:0.85 ;
+       }
+       .main{
+           margin-top: 5%;
+           margin-bottom: 5%;
+       }
+       #temp{
+         text-align:center;
+         font-size: large;
+         font-weight: bolder;
+         color: whitesmoke;
+       }
+       #temp>img{
+           width: 40px;
+           height: 40px;
+       }
+       #temp>p{
+           font-size: 15px;
+       }
+       #temp>h2{
+           font-size: 30px;
+           font-style: italic;
+       }
+       #date>{
+           align-items: center;
+       }
+
+    </style>
+</head>
+<body>
+    <div class="main">
+        <input type="text" id="city" placeholder="Search Live Weather">
+        <button onclick="getweather()">Search</button>
+    </div>
+    <div id="weatherapp">
+
+        <div id="weather">
+
+        <div id="para">
+          <div id="temp">
+          </div>
+          <div id="date"></div>
+        </div id="week">
+        </div>
+
+        <div id="right"></div>
+
+    </div>
+</body>
+</html>
+<script>
+    let right= document.getElementById("right");
+    let container=document.getElementById("temp");
+    let container1= document.getElementById("date")
+    let key ="b677145c5a1a0eb22c8a7ceb536647f8";
+    async function getweather(){
+        try{
+        let city= document.getElementById("city").value;
+        
+        let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&cnt=7&appid=${key}`;
+        let res = await fetch(url);
+        let data= await res.json();
+        console.log(data)
+           showdata(data)
+        } catch (err){
+            console.log(err)
+        } finally{
+            console.log("worked finally")
+        }
+    }
+    function showdata(data){
+        right.innerHTML =null;
+        container.innerHTML=null;
+        container1.innerHTML=null;
+        let left_div = document.createElement("div");
+        let right_div = document.createElement("div");
+        let map = document.createElement("iframe");
+        map.setAttribute("id","frame")
+       
+        map.src=`https://www.google.com/maps/embed/v1/place?key=AIzaSyBlYTpLv6KlJYY8ehAQBzTxSR7R9bFlGUA
+    &q=${data.name}`
+    let div=document.createElement("div");
+        let name = document.createElement("h2");
+        name.innerText = `${data.name}`
+        let icon1=document.createElement("img");
+        icon1.src = "https://openweathermap.org/img/wn/"+data.weather[0].icon+".png"
+        let clouds = document.createElement("p");
+        clouds.innerHTML = data.weather[0].description
+        let temp=document.createElement("h2");
+        let temp1 = data.main.temp;
+        temp1 = Math.round(temp1-273);
+        temp.innerText=`${temp1}˚C`
+        let sunrise=document.createElement("p");
+        let img1=document.createElement("img");
+        img1.src="https://cdn-icons-png.flaticon.com/512/787/787604.png"
+        let img2=document.createElement("img");
+        img2.src="https://cdn-icons-png.flaticon.com/512/2924/2924879.png"
+        sunrise.innerText=new Date(data.sys.sunrise*1000)
+        let sunset = document.createElement("p");
+        sunset.innerText=new Date(data.sys.sunset*1000)
+        let wind = document.createElement("p");
+        wind.innerText=`wind:${data.wind.speed}`;
+        let maxtemp=document.createElement("p");
+        let maxtemp1=data.main.temp_max;
+        maxtemp1 = Math.round(maxtemp1-273);
+        maxtemp.innerText=`max-temp:${maxtemp1}˚C`
+        let mintemp=document.createElement("p");
+        let mintemp1=data.main.temp_min;
+        mintemp1 = Math.round(mintemp1-273);
+        mintemp.innerText=`min-temp:${mintemp1}˚C`
+        left_div.append(name,clouds,sunrise,sunset,wind,maxtemp,mintemp)
+        container.append(temp,img1,sunrise,img2,sunset);
+        container1.append(name,icon1,clouds,maxtemp,mintemp,wind);
+        right_div.append(map);
+        right.append(right_div);
+    }
+</script>
+<!-- AIzaSyBlYTpLv6KlJYY8ehAQBzTxSR7R9bFlGUA -->
