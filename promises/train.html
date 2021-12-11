@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>santsh</title>
+</head>
+<body>
+<form>
+   <div>
+    <label>Nmae</label>
+    <input type="text" id="name" />
+   </div>
+   <div>
+       <button onclick="register()">submit</button>
+   </div>
+</form>
+</body>
+</html>
+<script>
+let BtoG = ["Dhoni","kohli","Alan","groot","jethalal","Shaktiman","Mr Bean","Buvanba"];
+
+let MtoG = ["Dhoni","kohli","Alan","groot","jethalal","Shaktiman","Mr Bean","Buvanba"];
+
+let PtoG = ["Dhoni","kohli","Alan","groot","jethalal","Shaktiman","Mr Bean","Buvanba"];
+
+async function checkAvailability(){
+    let promise = new Promise(function(resolve,reject){
+      setInterval(function(){
+        if(BtoG.length === 4){
+            resolve(`BtoG is avalable`);
+        }else if(MtoG.length === 4){
+            resolve(`BtoG is avalable`);
+        }else if(PtoG.length === 4){
+            resolve(`BtoG is avalable`);
+        }
+      },1000);
+    });
+    let res = await promise;
+    console.log(res);
+}
+function cancelTheticket(){
+    let cancelling_speed1 = Math.round(Math.random()*5);
+    let cancelling_speed2 = Math.round(Math.random()*5);
+    let cancelling_speed3 = Math.round(Math.random()*2);
+
+     setTimeout(function(){
+        BtoG.pop();
+     },cancelling_speed1*1000);
+    
+     setTimeout(function(){
+        MtoG.pop();
+     },cancelling_speed2*1000)
+
+     setTimeout(function(){
+        PtoG.pop();
+     },cancelling_speed3*1000)
+
+   console.log(BtoG,MtoG,PtoG)
+}
+let intraval = setInterval(cancelTheticket,2000);
+</script>

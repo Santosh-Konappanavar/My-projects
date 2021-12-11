@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>santsh</title>
+</head>
+<body>
+<form>
+   <div>
+    <label>Nmae</label>
+    <input type="text" id="name" />
+   </div>
+   <div>
+       <button onclick="register()">submit</button>
+   </div>
+</form>
+</body>
+</html>
+<script>
+    // page 1
+let queue = ["Messi","Ronaldo","santosh","sinchan"]
+function register(){
+    let name= document.getElementById("name").value;
+    queue.push(name);
+    let message = `${name} your reg successfull.now go stand`;
+    alert (message);
+    let Mypromise = new Promise(function(resolve,reject){
+        //keep on checking the time
+      let interval = setInterval(function(){
+            if(queue[0]===name){
+            resolve(`${name} its your turn now`);
+            clearInterval(interval);
+        }
+        },1000);
+    });
+    Mypromise.then(function(res){
+        alert(res)
+    });
+}
+// page2
+function startvaccination(){
+    queue.shift()
+    if(queue.length===0){
+        clearInterval(interval);
+    }
+    console.log(queue)
+}
+console.log("queue:",queue)
+let interval = setInterval(startvaccination,4000);
+</script>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="movies"></div>
+</body>
+</html>
+<script>
+    let movies=document.getElementById("movies").value;
+    async function popularmovie(){
+        let res= await fetch(`https://www.omdbapi.com/?apikey=${65714494}&s=${movies}`);
+        let data= await res.json();
+        console.log(data);
+    }
+    popularmovie()
+</script>
+<!-- https://api.themoviedb.org/3/movie/550?api_key=6ccb5fb766b956de40f4cb7fcfff5357 -->
