@@ -10,11 +10,14 @@
             width: 200px;
         }
         #movies{
-            height: 200px;
-            width: 206px;
-            border:1px solid black;
+            height: 205px;
+            width: 210px;
             overflow: scroll;
             border-top: none;
+        }
+        #movies>div{
+            display: flex;
+            margin: 10px;
         }
         img{
             height: 100px;
@@ -23,7 +26,7 @@
     </style>
 </head>
 <body>
-    <input oninput="debounce(main,1000)" type="text" id="movie" placeholder="Enter movie name">
+    <input oninput="debounce(main,500)" type="text" id="movie" placeholder="Enter movie name">
     <div id="movies"></div>
 </body>
 </html>
@@ -45,11 +48,13 @@
         }
         movies_div.innerHTML = null
         movies.forEach((movie)=>{
-            let p=document.createElement("p")
+            let div=document.createElement("div");
+            let p=document.createElement("p");
             p.innerText=movie.Title;
             let img=document.createElement("img");
             img.src=movie.Poster;
-            movies_div.append(img,p);
+            div.append(img,p)
+            movies_div.append(div);
         });
     }
    async function main(){

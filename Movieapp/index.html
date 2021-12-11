@@ -1,22 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div id="movies"></div>
-</body>
-</html>
-<script>
-    let movies=document.getElementById("movies").value;
-    async function popularmovie(){
-        let res= await fetch(`https://www.omdbapi.com/?apikey=${65714494}&s=${movies}`);
-        let data= await res.json();
-        console.log(data);
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>movies</title>
+        <style>
+            *{
+                background-color: black;
+            }
+            img {
+                width: 100%;
+                height: 200px;
+            }
+            #movies {
+                padding: 10px;
+                border: 1px solid white;
+                color: white;
+            }
+            button {
+                padding: 10px;
+                background-color: blue;
+                color: white;
+                font-weight: bolder;
+                width: 200px;
+                font-size: 15px;
+                height: 40px;
+                cursor: pointer;
+                border: none;
+            }
+            button:hover {
+                background-color: royalblue;
+            }
+            #main{
+                width: 25%;
+                text-align: center;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                margin: auto;
+            }
+            #data{
+                display: grid;
+                grid-template-columns: repeat(5,15%);
+                gap: 2.5%;
+                color: whitesmoke;
+               
+                justify-content: space-around;
+            }
+            #data>div{
+                box-shadow: 0 4px 8px 0 rgba(233, 227, 227, 0.3);
+                text-align: center;
+            }
+            #movie{
+            height: 205px;
+            width: 210px;
+            border-top: none;
+            color: white;
+            margin: auto;
+            overflow: scroll;
+            }
+            #movie>div{
+            display: flex;
+            margin: 10px;
+        }
+            #movie>div>img{
+            height: 100px;
+            width: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+        <input type="text" id="movies" placeholder="Enter Movie Name" oninput="debounce(main,500)"/>
+        <button onclick="getmovie()">Get movie</button>
+        </div>
+        <div id="movie"></div>
+        <div id="data"></div>
+    </body>
+    <script>
+         
+        async function getmovie() {
+            
+            try{
+                let movies = document.getElementById('movies').value;
+            let res = await fetch(
+                `https://www.omdbapi.com/?apikey=${65714494}&s=${movies}`,
+            );
+            let data = await res.json();
+            console.log(data);
+                showmovie(data.Search);
+               
+            } catch(err){
+                alert("Movie not found")
+            }
+            movies.value=""
+          
+        }
+        let contaner = document.getElementById('data');
+        function showmovie(movies) {
+            contaner.innerHTML = null;
+            movies.forEach((movie) => {
+                let div =document.createElement("div")
+                let name = document.createElement('p');
+                name.innerText = movie.Title;
+                let temp = document.createElement('p');
+                temp.innerText = movie.Year;
+                let img = document.createElement('img');
+                img.src = movie.Poster;
+                div.append(img, name, temp);
+                contaner.append(div)
+            });
+        }
+
+    var timerId;
+    let movies_div =document.getElementById("movie")
+    async function searchmovies(moviesname){
+        try {
+            let res = await fetch(`https://www.omdbapi.com/?apikey=${65714494}&s=${moviesname}`)
+            let data= await res.json();
+            return data
+        }catch(e){
+            console.log(e)
+        }
     }
-    popularmovie()
-</script>
+    function appendmovie(movies){
+        if(movies ===undefined){
+            return false
+        }
+        movies_div.innerHTML = null
+        movies.forEach((movie)=>{
+            let div=document.createElement("div");
+            let p=document.createElement("p");
+            p.innerText=movie.Title;
+            let img=document.createElement("img");
+            img.src=movie.Poster;
+            div.append(img,p)
+            movies_div.append(div);
+        });
+    }
+   async function main(){
+        let name = document.getElementById("movies").value;
+        if(name.length < 3){
+            return false;
+        }
+        let res= await searchmovies(name);
+        let movies_data=res.Search;
+        appendmovie(movies_data)
+        console.log(res);
+    }
+    function debounce(func,delay){
+        if(timerId){
+            clearTimeout(timerId)
+        }
+         timerId=setTimeout(()=>{
+            func()
+        },delay)
+    }
+    </script>
+</html>
 <!-- https://api.themoviedb.org/3/movie/550?api_key=6ccb5fb766b956de40f4cb7fcfff5357 -->
