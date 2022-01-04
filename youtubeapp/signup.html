@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+    <style>
+        #signup-form{
+            width: 17%;
+        }
+        input{
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+    <div id="signup">
+        <form onsubmit="Signup(event)" id="signup-form">
+            <h1>Signup</h1>
+            <input type="text" placeholder="name" id="name" />
+            <input type="email" placeholder="email" id="email"/>
+            <input type="password" placeholder="password" id="password"/>
+            <input type="text" placeholder="username" id="username" />
+            <input type="number" placeholder="mobile" id="mobile"/>
+            <input type="text" placeholder="description" id="description"/>
+            <input type="submit" />
+          </form>
+    </div>
+    </div>
+</body>
+</html>
+<script>
+    function Signup(e){
+        e.preventDefault();
+        let form = document.getElementById("signup-form");
+        let user_data = {
+            name:form.name.value,
+            email:form.email.value,
+            password:form.password.value,
+            username:form.username.value,
+            mobile:form.mobile.value,
+            description:form.description.value,
+        };
+       user_data = JSON.stringify(user_data)
+
+       fetch("https://masai-api-mocker.herokuapp.com/auth/register",{
+           method:'POST',
+           body:user_data,
+           headers:{
+               'Content-Type':"application/json",
+           },
+       })
+       .then((res)=>{
+           return res.json();
+       })
+       .then((res)=>{
+           window.location.href="index.html"
+       })
+       .catch((err)=>{
+         alert("Try One More Time")
+       });
+    }
+</script>
